@@ -1,23 +1,13 @@
-import { useState, useEffect } from "react"
 import { Container, Table } from "reactstrap"
-import axios from "axios"
 
-export function FunctionalApp() {
-
-  const [comments, setComments] = useState([])
-  useEffect(() => {
-    axios.get('https://jsonplaceholder.typicode.com/comments')
-    .then(res => {
-      setComments(res.data)
-    })
-    .catch(err => {
-      console.log(err);
-    })
-  }, [])
+export function FunctionalApp({comments, loading}) {
+  if(loading){
+    return <h2>...Loading</h2>
+  }
   return (
     <>
      <Container>
-      <h3>With Functional Component and axios</h3>
+      <h3>With Functional Component</h3>
         <Table className="mt-5" bordered hover>
           <thead>
             <tr>
@@ -30,14 +20,14 @@ export function FunctionalApp() {
           <tbody>
             {
                 comments.map((comment) => (
-            <tr>
+            <tr key={comment.id}>
               <th scope="row">{comment.id}</th>
               <td>{comment.name}</td>
               <td>{comment.email}</td>
               <td>{comment.body}</td>
             </tr>
               ))
-            };
+            }
           </tbody>
         </Table>
       </Container>
