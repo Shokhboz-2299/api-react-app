@@ -18,7 +18,7 @@ export class ClassApp extends React.Component {
   render() {
     return (
       <>
-      {/* <Container>
+      <Container>
         <h3>With Class Component</h3>
         <Table className="mt-5" bordered hover>
           <thead>
@@ -31,7 +31,7 @@ export class ClassApp extends React.Component {
           </thead>
           <tbody>
             {
-              this.state.comments.map((comment) => (
+              this.this.comments.map((comment) => (
             <tr key={comment.id}>
               <th scope="row">{comment.id}</th>
               <td>{comment.name}</td>
@@ -42,7 +42,7 @@ export class ClassApp extends React.Component {
             };
           </tbody>
         </Table>
-      </Container> */}
+      </Container>
       </>
     )
   }
