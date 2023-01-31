@@ -31,7 +31,7 @@ export class ClassApp extends Component {
     const { comments, currentPage, dataPerPage, searchTerm  } = this.state;
     const filteredData = comments.filter(item =>
       item.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    )
 
     const indexOfLastData = currentPage * dataPerPage;
     const indexOfFirstData = indexOfLastData - dataPerPage;

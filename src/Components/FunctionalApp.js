@@ -9,15 +9,13 @@ function FunctionalApp() {
   const [currentPage, setCurrentPage] = useState(1);
   const [dataPerPage, setDataPerPage] = useState(10);
   const [loading, setLoading] = useState(false);
-  const [filterData, setFilterData] = useState([]);
-  const [query, setQuery] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const fetchComments = async () => {
       setLoading(true);
       const res = await axios.get(API_URL);
       setComments(res.data)
-      setFilterData(res.data)
       setLoading(false)
         ;
     }
@@ -25,21 +23,15 @@ function FunctionalApp() {
     fetchComments();
   }, [])
 
-   // filtering
-  const handleSearch = (event) => {
-    const getSearch = event.target.value;
-    if (getSearch.length > 0) {
-      const commentsData = comments.filter(item => item.name.toLowerCase().includes(getSearch));
-      setComments(commentsData);
-    } else {
-      setCurrentPage(filterData)
-    }
-    setQuery(getSearch);
-  }
+  const handleSearch = e => setSearchTerm(e.target.value);
+
+  const filteredData = comments.filter(
+    comments => ((comments.name.toLowerCase().indexOf(searchTerm.toLowerCase()))!== -1) ||((comments.body.toLowerCase().indexOf(searchTerm.toLowerCase())) !== -1)
+  );
 
   const indexOfLastData = currentPage * dataPerPage;
   const indexOfFirstData = indexOfLastData - dataPerPage;
-  const currentData = comments.slice(indexOfFirstData, indexOfLastData);
+  const currentData = filteredData.slice(indexOfFirstData, indexOfLastData);
 
   const handlePageChange = pageNumber => setCurrentPage(pageNumber);
 
@@ -53,11 +45,11 @@ function FunctionalApp() {
       <Form>
               <FormGroup>
                 <Input
-                 onChange={(e) => handleSearch(e)}
+                 onChange={handleSearch}
                   className='filter'
                   id="filter"
                   name="search"
-                  value={query}
+                  value={searchTerm}
                   placeholder="Search"
                   type="search"
                 />
